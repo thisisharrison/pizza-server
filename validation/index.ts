@@ -6,7 +6,6 @@ export function validateTopping(data: OrderI) {
     let errors: Partial<Record<keyof OrderI, string>> = {};
 
     let { toppings } = data;
-    console.log(toppings, Object.values(Topping));
 
     if (toppings.length === 0 || !Array.isArray(toppings)) {
         errors.toppings = "Toppings cannot be empty";
