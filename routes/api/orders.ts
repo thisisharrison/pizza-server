@@ -3,7 +3,8 @@ import { Order } from "../../models/Order";
 
 const router = express.Router();
 
-router.get("/test", (req, res) => res.json({ msg: "Testing order route" }));
+/** A dummy route for demo only. In Front-End, it checks if a server is running and adjust whether it should call API or update UI and mock the API call simply with console log */
+router.get("/test", (req, res) => res.status(200).json({ msg: "Testing order route" }));
 
 router.post("/", async (req, res) => {
     // Client may send an array of pizza orders

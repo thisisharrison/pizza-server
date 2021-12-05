@@ -2,21 +2,23 @@
 
 ---
 
-## Development
+## Instructions
 
-###1. Use correct node version
+To view Front-End, click here [pizza-store](https://github.com/thisisharrison/pizza-store)
 
-```
+### 1. Use correct node version
+
+```bash
 nvm use 16
 ```
 
-###2. Install Dependencies
+### 2. Install Dependencies
 
-```
+```bash
 yarn
 ```
 
-###3. Start development Server using MongoDB
+### 3. Start development Server using MongoDB
 
 a. Install MongoDB if you do not have it
 
@@ -53,7 +55,7 @@ $ mongo
 switched to db pizza
 ```
 
-e. Keys for development is already configured for you. If you want to change them, you can update in `config/keys_dev.ts`
+e. Keys for development is already configured in `config/keys_dev.ts`. Production keys in `config/keys_prod.ts` are stored in deployed service. For example, the demo site is deployed in Heroku. [Live Site](https://thisisharrison.github.io/pizza-store/)
 
 ```js
 export default {
@@ -62,7 +64,7 @@ export default {
 };
 ```
 
-###4. Testing the service
+### 4. Testing the service
 
 a. Start the server
 
@@ -75,25 +77,23 @@ b. Use `postman` or `cURL`. Generate a pizza order in JSON format.
 Eg. Successful Order
 
 ```bash
-$ curl -X POST -d '{"name": "Pizza Name #1","quantity": 1,"price": 99,"size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
+$ curl -X POST -d '{"name": "Pizza Name 1","quantity": 1,"price": 99,"size": "Pizza Size #1","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
 
-{"name":"Pizza Name #1","quantity":1,"price":99,"size":"Small","toppings":["Pizza Topping #9","Pizza Topping #8"],"_id":"61ac8d86aa91a2a887492c48","createdAt":"2021-12-05T09:59:34.435Z","updatedAt":"2021-12-05T09:59:34.435Z","__v":0}%
+{"name":"Pizza Name 1","quantity":1,"price":99,"size":"Pizza Size #1","toppings":["Pizza Topping #9","Pizza Topping #8"],"_id":"61acf967b4ea5a177df1e754","createdAt":"2021-12-05T17:39:51.190Z","updatedAt":"2021-12-05T17:39:51.190Z","__v":0}
 ```
 
 Eg. Failed Order (missing quantity and price)
 
 ```bash
-$ curl -d '{"name": "Pizza Name #1","size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
+$ curl -d '{"name": "Pizza Name 1","size": "Pizza Size #1","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
 
 {"quantity":{"name":"ValidatorError","message":"Must include at least 1 unit","properties":{"message":"Must include at least 1 unit","type":"required","path":"quantity"},"kind":"required","path":"quantity"},"price":{"name":"ValidatorError","message":"Price cannot be left empty","properties":{"message":"Price cannot be left empty","type":"required","path":"price"},"kind":"required","path":"price"}}
 ```
 
-c. Production has csrf protection. It can be tested on `postman` as well. Just add the `X-XSRF-TOKEN` in the header with the `csrfToken`
+### 5. Run tests
 
-Eg. Getting CSRF Token
+**Note:** Make sure you did not run `yarn dev` as port `8080` will already be in used.
 
 ```bash
-$ curl http://localhost:8080/csrf
-
-{"csrfToken":"TzxnF8mZ-md7o2BPWrk3GW9GKQ6nqq3a1Qyc"}%
+yarn test
 ```

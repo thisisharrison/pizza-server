@@ -3,7 +3,6 @@ import mongoose, { ConnectOptions } from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
-import csrf from "csurf";
 import keys from "../config/keys";
 import orderRoutes from "../routes/api/orders";
 import { loggerMiddleware } from "./logger";

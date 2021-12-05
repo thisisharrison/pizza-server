@@ -2,6 +2,7 @@ import validator from "validator";
 import { Topping } from "../models/Order";
 import type { OrderI } from "../models/Order";
 
+/** Checks that User has selected at least 1 topping and selected toppings are in Topping enum */
 export function validateTopping(toppings: string[]) {
     let errors: Partial<Record<keyof OrderI, string>> = {};
 
