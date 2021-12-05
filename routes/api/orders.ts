@@ -22,19 +22,23 @@ router.post("/", async (req, res) => {
     const { errors, isValid } = validateTopping(newOrder);
 
     if (validationErrors) {
-        return res.status(400).json({ ...validationErrors.errors, ...errors });
+        res.status(400).json({ ...validationErrors.errors, ...errors });
+        return;
     }
 
     if (!isValid) {
-        return res.status(400).json({ toppings: errors });
+        res.status(400).json({ toppings: errors });
+        return;
     }
 
     newOrder.save().then(
         (response) => {
-            return res.status(201).json(response);
+            res.status(201).json(response);
+            return;
         },
         (error) => {
-            return res.status(400).json(error);
+            res.status(400).json(error);
+            return;
         }
     );
 });
