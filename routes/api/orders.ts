@@ -21,16 +21,22 @@ router.post("/", async (req, res) => {
 
     const { errors, isValid } = validateTopping(newOrder);
 
-    if (validationErrors || !isValid) {
-        res.status(400).json({ ...validationErrors!.errors, ...errors });
-    } else {
-        newOrder.save().then(
-            (response) => {
-                res.status(201).json(response);
-            },
-            (error) => res.status(400).json(error)
-        );
+    if (validationErrors) {
+        return res.status(400).json({ ...validationErrors.errors, ...errors });
     }
+
+    if (!isValid) {
+        return res.status(400).json({ toppings: errors });
+    }
+
+    newOrder.save().then(
+        (response) => {
+            return res.status(201).json(response);
+        },
+        (error) => {
+            return res.status(400).json(error);
+        }
+    );
 });
 
 export default router;

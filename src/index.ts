@@ -31,6 +31,8 @@ app.use(bodyParser.json());
 
 app.use("/api/orders", orderRoutes);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.info(`Sever listening on port:${port}`);
 });
+
+export default server;
