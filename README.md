@@ -51,7 +51,7 @@ d. Create DB called `pizza`
 
 ```bash
 $ mongo
-> use cinema
+> use pizza
 switched to db pizza
 ```
 
