@@ -1,12 +1,25 @@
 import express from "express";
 import { Order } from "../../models/Order";
-import { validateTopping } from "../../validation";
 
 const router = express.Router();
 
 router.get("/test", (req, res) => res.json({ msg: "Testing order route" }));
 
 router.post("/", async (req, res) => {
+    // Client may send an array of pizza orders
+    if (Array.isArray(req.body)) {
+        try {
+            const response = await Order.create(req.body);
+            res.status(201).json(response);
+            return;
+        } catch (error) {
+            console.error(error);
+            res.status(400).json(error);
+            return;
+        }
+    }
+
+    // To handle single pizza order
     const newOrder = new Order({
         name: req.body.name,
         quantity: req.body.quantity,
@@ -19,15 +32,8 @@ router.post("/", async (req, res) => {
 
     const validationErrors = newOrder.validateSync();
 
-    const { errors, isValid } = validateTopping(newOrder);
-
     if (validationErrors) {
-        res.status(400).json({ ...validationErrors.errors, ...errors });
-        return;
-    }
-
-    if (!isValid) {
-        res.status(400).json({ toppings: errors });
+        res.status(400).json({ ...validationErrors.errors });
         return;
     }
 

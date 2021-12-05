@@ -75,7 +75,7 @@ b. Use `postman` or `cURL`. Generate a pizza order in JSON format.
 Eg. Successful Order
 
 ```bash
-$ curl -d '{"name": "Pizza Name #1","quantity": 1,"price": 99,"size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
+$ curl -X POST -d '{"name": "Pizza Name #1","quantity": 1,"price": 99,"size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
 
 {"name":"Pizza Name #1","quantity":1,"price":99,"size":"Small","toppings":["Pizza Topping #9","Pizza Topping #8"],"_id":"61ac8d86aa91a2a887492c48","createdAt":"2021-12-05T09:59:34.435Z","updatedAt":"2021-12-05T09:59:34.435Z","__v":0}%
 ```
@@ -86,4 +86,14 @@ Eg. Failed Order (missing quantity and price)
 $ curl -d '{"name": "Pizza Name #1","size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
 
 {"quantity":{"name":"ValidatorError","message":"Must include at least 1 unit","properties":{"message":"Must include at least 1 unit","type":"required","path":"quantity"},"kind":"required","path":"quantity"},"price":{"name":"ValidatorError","message":"Price cannot be left empty","properties":{"message":"Price cannot be left empty","type":"required","path":"price"},"kind":"required","path":"price"}}
+```
+
+c. Production has csrf protection. It can be tested on `postman` as well. Just add the `X-XSRF-TOKEN` in the header with the `csrfToken`
+
+Eg. Getting CSRF Token
+
+```bash
+$ curl http://localhost:8080/csrf
+
+{"csrfToken":"TzxnF8mZ-md7o2BPWrk3GW9GKQ6nqq3a1Qyc"}%
 ```

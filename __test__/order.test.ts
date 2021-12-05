@@ -10,25 +10,25 @@ afterAll((done) => {
 
 // Happy path with right keys and values
 const rightOrder = {
-    name: "Pizza Name #1",
+    name: "Pizza Name 1",
     quantity: 1,
     price: 99,
-    size: "Small",
+    size: "Pizza Size #1",
     toppings: ["Pizza Topping #9", "Pizza Topping #8"],
 };
 
 // Remove keys in the tests below
 const missingOrder = {
-    name: "Pizza Name #1",
+    name: "Pizza Name 1",
     quantity: 1,
     price: 99,
-    size: "Small",
+    size: "Pizza Size #1",
     toppings: [],
 };
 
 // Update more keys below
 const wrongOrder = {
-    name: "Pizza Name #1",
+    name: "Pizza Name 1",
     quantity: 1,
     price: 99,
     size: "Extra Extra Extra Large",
@@ -79,11 +79,7 @@ describe("POST /api/orders", () => {
 
         test("should display error message", async () => {
             let response = await request(server).post("/api/orders").send(missingOrder);
-            expect(response.body).toEqual({
-                toppings: {
-                    toppings: "Toppings cannot be empty",
-                },
-            });
+            expect(response.body).toHaveProperty("toppings");
 
             delete missingOrder.price;
             response = await request(server).post("/api/orders").send(missingOrder);

@@ -2,10 +2,8 @@ import validator from "validator";
 import { Topping } from "../models/Order";
 import type { OrderI } from "../models/Order";
 
-export function validateTopping(data: OrderI) {
+export function validateTopping(toppings: string[]) {
     let errors: Partial<Record<keyof OrderI, string>> = {};
-
-    let { toppings } = data;
 
     if (toppings.length === 0 || !Array.isArray(toppings)) {
         errors.toppings = "Toppings cannot be empty";

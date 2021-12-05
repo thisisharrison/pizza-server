@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { validateTopping } from "../validation";
 
 export interface OrderI extends Document {
     name: Name;
@@ -9,9 +10,9 @@ export interface OrderI extends Document {
 }
 
 export enum Size {
-    Small = "Small",
-    Medium = "Medium",
-    Large = "Large",
+    PizzaSize1 = "Pizza Size #1",
+    PizzaSize2 = "Pizza Size #2",
+    PizzaSize3 = "Pizza Size #3",
 }
 
 export enum Topping {
@@ -27,12 +28,12 @@ export enum Topping {
 }
 
 export enum Name {
-    PizzaName1 = "Pizza Name #1",
-    PizzaName2 = "Pizza Name #2",
-    PizzaName3 = "Pizza Name #3",
-    PizzaName4 = "Pizza Name #4",
-    PizzaName5 = "Pizza Name #5",
-    PizzaName6 = "Pizza Name #6",
+    PizzaName1 = "Pizza Name 1",
+    PizzaName2 = "Pizza Name 2",
+    PizzaName3 = "Pizza Name 3",
+    PizzaName4 = "Pizza Name 4",
+    PizzaName5 = "Pizza Name 5",
+    PizzaName6 = "Pizza Name 6",
 }
 
 const OrderSchema = new Schema<OrderI>(
@@ -41,7 +42,17 @@ const OrderSchema = new Schema<OrderI>(
         quantity: { type: Number, required: [true, "Must include at least 1 unit"] },
         price: { type: Number, required: [true, "Price cannot be left empty"] },
         size: { type: String, required: true, enum: { values: Object.values(Size), message: `{VALUE} is not a valid size` } },
-        toppings: { type: [String], required: true },
+        toppings: {
+            type: [String],
+            required: true,
+            validate: {
+                validator: function (toppings: string[]) {
+                    const { isValid } = validateTopping(toppings);
+                    return isValid;
+                },
+                message: () => `Toppings contain invalid toppings or was left empty`,
+            },
+        },
     },
     { timestamps: true }
 );
