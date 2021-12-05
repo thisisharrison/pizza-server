@@ -28,16 +28,6 @@ app.use(
 app.use(helmet());
 app.use(cookieParser());
 
-// CSRF protection -- Disabled intentionally
-// if (process.env.NODE_ENV === "production") {
-// const csrfProtection = csrf({ cookie: true });
-// app.use(csrfProtection);
-// app.get("/csrf", csrfProtection, (req, res) => {
-//     res.json({ csrfToken: req.csrfToken() });
-//     return;
-// });
-// }
-
 const db = keys.mongoURI;
 
 mongoose
