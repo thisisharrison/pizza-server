@@ -35,12 +35,15 @@ export enum Name {
     PizzaName6 = "Pizza Name #6",
 }
 
-const OrderSchema = new Schema<OrderI>({
-    name: { type: String, required: true, enum: { values: Object.values(Name), message: `{VALUE} is not a valid pizza` } },
-    quantity: { type: Number, required: [true, "Must include at least 1 unit"] },
-    price: { type: Number, required: [true, "Price cannot be left empty"] },
-    size: { type: String, required: true, enum: { values: Object.values(Size), message: `{VALUE} is not a valid size` } },
-    toppings: { type: [String], required: true },
-});
+const OrderSchema = new Schema<OrderI>(
+    {
+        name: { type: String, required: true, enum: { values: Object.values(Name), message: `{VALUE} is not a valid pizza` } },
+        quantity: { type: Number, required: [true, "Must include at least 1 unit"] },
+        price: { type: Number, required: [true, "Price cannot be left empty"] },
+        size: { type: String, required: true, enum: { values: Object.values(Size), message: `{VALUE} is not a valid size` } },
+        toppings: { type: [String], required: true },
+    },
+    { timestamps: true }
+);
 
 export const Order = model<OrderI>("Order", OrderSchema);

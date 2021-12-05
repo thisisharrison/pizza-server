@@ -77,7 +77,7 @@ Eg. Successful Order
 ```bash
 $ curl -d '{"name": "Pizza Name #1","quantity": 1,"price": 99,"size": "Small","toppings": ["Pizza Topping #9","Pizza Topping #8"]}' -H 'Content-Type: application/json' http://localhost:8080/api/orders
 
-{"name":"Pizza Name #1","quantity":1,"price":99,"size":"Small","toppings":["Pizza Topping #9","Pizza Topping #8"],"_id":"61ac77d7a00a04d965fb0ad4","__v":0}%
+{"name":"Pizza Name #1","quantity":1,"price":99,"size":"Small","toppings":["Pizza Topping #9","Pizza Topping #8"],"_id":"61ac8d86aa91a2a887492c48","createdAt":"2021-12-05T09:59:34.435Z","updatedAt":"2021-12-05T09:59:34.435Z","__v":0}%
 ```
 
 Eg. Failed Order (missing quantity and price)
