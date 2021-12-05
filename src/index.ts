@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
@@ -18,34 +18,39 @@ app.use(loggerMiddleware);
 // Security Middleware
 app.use(
     cors({
-        origin: "*", //keys.allowedOrigin,
+        origin: keys.allowedOrigin,
         allowedHeaders: ["Content-Type"],
         optionsSuccessStatus: 204,
+        credentials: true,
     })
 );
 // Helmet includes Content-Security-Policy header, removes X-Powered-By, Strict-Transport-Security, X-Download-Options, Cache-Control, X-Content-Type-Options, X-Frame-Options, X-XSS-Protection
 app.use(helmet());
-// CSRF protection
-if (process.env.NODE_ENV === "production") {
-    app.use(cookieParser());
-    const csrfProtection = csrf({ cookie: true });
-    app.use(csrfProtection);
-    app.get("/csrf", csrfProtection, (req, res) => {
-        res.json({ csrfToken: req.csrfToken() });
-        return;
-    });
-}
+app.use(cookieParser());
+
+// CSRF protection -- Disabled intentionally
+// if (process.env.NODE_ENV === "production") {
+// const csrfProtection = csrf({ cookie: true });
+// app.use(csrfProtection);
+// app.get("/csrf", csrfProtection, (req, res) => {
+//     res.json({ csrfToken: req.csrfToken() });
+//     return;
+// });
+// }
 
 const db = keys.mongoURI;
 
 mongoose
-    .connect(db)
+    .connect(db, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    } as ConnectOptions)
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch((err) => console.log(err));
 
 app.use("/api/orders", orderRoutes);
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const server = app.listen(port, () => {
     console.info(`Sever listening on port:${port}`);

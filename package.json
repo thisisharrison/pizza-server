@@ -3,9 +3,15 @@
     "version": "1.0.0",
     "description": "",
     "main": "dist/index.js",
+    "engines": {
+        "node": "16.13.0"
+    },
     "scripts": {
+        "start": "node dist/index.js",
+        "postinstall": "tsc",
+        "deploy": "git add . && git commit -m Heroku && git push heroku master",
         "build": "tsc --project ./",
-        "start": "nodemon src/index.ts",
+        "dev": "nodemon src/index.ts",
         "test": "jest --detectOpenHandles"
     },
     "keywords": [],

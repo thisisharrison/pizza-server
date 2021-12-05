@@ -67,7 +67,7 @@ export default {
 a. Start the server
 
 ```bash
-yarn start
+yarn dev
 ```
 
 b. Use `postman` or `cURL`. Generate a pizza order in JSON format.
